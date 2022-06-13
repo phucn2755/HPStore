@@ -1,0 +1,72 @@
+﻿@page "/admin/tainghes"
+@page "/admin"
+@inherits OwningComponentBase<IHPStoreRepository>
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên Tai nghe</th>
+                <th>Loại</th>
+                <th>Giá</th>
+                <td />
+            </tr>
+        </thead>
+        <tbody>
+            @if (TaingheData?.Count() > 0)
+            {
+            @foreach (Tainghe b in TaingheData)
+            {
+            <tr>
+                <td>@b.TaingheID</td>
+                <td>@b.TenTainghe</td>
+                <td>@b.Loai</td>
+                <td>@b.Gia.ToString("c")</td>
+                
+                <td>
+                    <NavLink class="btn btn-info btn-sm"
+                             href="@GetDetailsUrl(b.TaingheID)">
+                        Chi Tiết
+                    </NavLink>
+                    <NavLink class="btn btn-warning btn-sm"
+                             href="@GetEditUrl(b.TaingheID)">
+                        Sửa
+                    </NavLink>
+                    <button class="btn btn-danger btn-sm"
+                            @onclick="@(e => DeleteTainghe(b))">
+                        Xóa
+                    </button>
+                </td>
+
+            </tr>
+            }
+            }
+            else
+            {
+            <tr>
+                <td colspan="5" class="text-center">Không có Tai nghe</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <NavLink class="btn btn-primary" href="/admin/tainghes/create">Thêm mới</NavLink>
+    @code {
+        public IHPStoreRepository Repository => Service;
+        public IEnumerable<Tainghe>
+            TaingheData { get; set; }
+        protected async override Task OnInitializedAsync()
+        {
+
+            await UpdateData();
+        }
+        public async Task UpdateData()
+        {
+            TaingheData = await Repository.Tainghes.ToListAsync();
+        }
+        public async Task DeleteTainghe(Tainghe b)
+        {
+            Repository.DeleteTainghe(b);
+            await UpdateData();
+        }
+        public string GetDetailsUrl(long id) => $"/admin/tainghes/details/{id}";
+        public string GetEditUrl(long id) => $"/admin/tainghes/edit/{id}";
+    }

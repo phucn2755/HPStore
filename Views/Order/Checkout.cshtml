@@ -1,0 +1,22 @@
+﻿@model Order
+<p>Vui lòng nhập thông tin chi tiết của bạn:</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Checkout" method="post">
+    <h3>Gửi tới</h3>
+    <div class="form-group">
+        <label> Tên :</label><input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Số điện thoại:</label><input asp-for="Phonenumber" class="form-control" />
+    </div>
+    <h3> Địa chỉ </h3>
+    <div class="form-group">
+        <label>Địa chỉ:</label><input asp-for="Line1" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Thành Phố :</label><input asp-for="City" class="form-control" />
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Order" />
+    </div>
+</form>

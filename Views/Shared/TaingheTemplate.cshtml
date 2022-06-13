@@ -1,0 +1,24 @@
+﻿@model Tainghe
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+        <h5 class="card-title">
+            @Model.TenTainghe
+            <span class="badge badge-pill badge-danger">
+                <small>@Model.Gia.ToString("c")</small>
+            </span>
+        </h5>
+        <form id="@Model.TaingheID" asp-page="/MyCart" method="post">
+            <input type="hidden" asp-for="TaingheID" />
+            <input type="hidden" name="returnUrl"
+                   value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <div class="card-text p-1">
+                <strong>@Model.Loai</strong>
+                <p>@Model.Mota</p>
+                <button type="submit"
+                        class="btn btn-warning btn-sm pull-right">
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
